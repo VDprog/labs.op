@@ -18,7 +18,12 @@ int points(...)
 
 int read(...)
 
-void print(...)
+void print(team *array, int size) {
+	cout << "------------------------------------" << endl;
+	for (int i = 0; i < size; i++)
+		cout << setw(3) << i + 1 << " | " << setw(21) << array[i].name << " | " << setw(4) << array[i].rating << " |" << endl;
+	cout << "------------------------------------" << endl;
+}
 
 void sort(team *array, int size) {
 	int n = 0;
