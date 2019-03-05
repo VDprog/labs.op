@@ -1,6 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <iomanip>
 
 using namespace std;
 
@@ -66,7 +67,7 @@ void print(team *array, int size) {
 void sort(team *array, int size) {
 	int n = 0;
 	for (int i = 1; i < size; i++) {
-		for (n= i; n >= 1 && array[n].rating > array[n - 1].rating; n--) {
+		for (n = i; n >= 1 && array[n].rating > array[n - 1].rating; n--) {
 			swap(array[n], array[n - 1]);
 		}
 	}
