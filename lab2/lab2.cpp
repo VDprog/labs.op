@@ -1,7 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include <string>
-//test
+
 using namespace std;
 
 struct team
@@ -20,7 +20,14 @@ int read(...)
 
 void print(...)
 
-void sort(...)
+void sort(team *array, int size) {
+	int n = 0;
+	for (int i = 1; i < size; i++) {
+		for (n= i; n >= 1 && array[n].rating > array[n - 1].rating; n--) {
+			swap(array[n], array[n - 1]);
+		}
+	}
+}
 
 void write(...)
 
