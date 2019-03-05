@@ -60,7 +60,13 @@ void print(...)
 
 void sort(...)
 
-void write(...)
+void write(team *array, int size)
+{
+	ofstream Output("result.csv");
+	for (int i = 0; i < size; i++)
+		Output << array[i].name << "," << array[i].rating << "\n";
+	Output.close();
+}
 
 int main()
 {
