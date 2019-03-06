@@ -31,12 +31,14 @@ int read(team * (&array))
 
 	Input >> top;
 	array = new team[top];
-	getline(Input, array[0].name);
+	getline(Input, buff);
 	top = 0;
 
 	while (Input.good())
 	{
-		getline(Input, buff, ',');
+		Input.ignore(3);
+		getline(Input, buff, '"');
+		Input.ignore(2);
 		array[top].name = buff;
 		for (int i = 1; i <= 9; i++)
 		{
@@ -92,6 +94,6 @@ int main()
 	sort(array, size);
 	print(array, size);
 	write(array, size);
-
+	system("pause");
 	return 0;
 }
