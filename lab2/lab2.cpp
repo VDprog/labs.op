@@ -2,12 +2,13 @@
 #include <fstream>
 #include <string>
 #include <iomanip>
+#include <vector>
 
 using namespace std;
 
 struct team
 {
-	string name;
+	vector<string> name;
 	int rating;
 	team()
 	{
@@ -23,34 +24,45 @@ int points(int a, int b)
 		return 1;
 	return 0;
 }
+int rating(string buff)
+{
+	int p = buff.find(":"), a, b;
+	a = stoi(buff.substr(0, p));
+	b = stoi(buff.substr(p + 1, buff.size() - 1));
+	return points(a, b);
+}
 int read(team * (&array))
 {
 	ifstream Input("premier_league.csv");
-	int top = 0, a, b;
+	int top = 0, a, b, p;
 	string buff;
 
 	Input >> top;
 	array = new team[top];
-	getline(Input, array[0].name);
+	getline(Input, buff);
 	top = 0;
 
 	while (Input.good())
 	{
 		getline(Input, buff, ',');
-		array[top].name = buff;
-		for (int i = 1; i <= 9; i++)
+		p = buff.find(":");
+		while (p == -1)
 		{
-			getline(Input, buff, ':');
-			a = stoi(buff);
+			array[top].name.push_back(buff);
 			getline(Input, buff, ',');
-			b = stoi(buff);
-			array[top].rating += points(a, b);
+			p = buff.find(":");
+			cout << "zero" << endl;
 		}
-		getline(Input, buff, ':');
-		a = stoi(buff);
+		cout << "first" << endl;
+		array[top].rating += rating(buff);
+		for (int i = 1; i <= 8; i++)
+		{
+			cout << "first" << endl;
+			getline(Input, buff, ',');
+			array[top].rating += rating(buff);
+		}
 		getline(Input, buff, '\n');
-		b = stoi(buff);
-		array[top].rating += points(a, b);
+		array[top].rating += rating(buff);
 		top++;
 	}
 	Input.close();
@@ -60,7 +72,12 @@ int read(team * (&array))
 void print(team *array, int size) {
 	cout << "------------------------------------" << endl;
 	for (int i = 0; i < size; i++)
-		cout << setw(3) << i + 1 << " | " << setw(21) << array[i].name << " | " << setw(4) << array[i].rating << " |" << endl;
+	{
+		for (int j = 0; j < array[i].name.size(); j++)
+		{
+			cout << setw(3) << i + 1 + j << " | " << setw(21) << array[i].name[j] << " | " << setw(4) << array[i].rating << " |" << endl;
+		}
+	}
 	cout << "------------------------------------" << endl;
 }
 
@@ -77,7 +94,12 @@ void write(team *array, int size)
 {
 	ofstream Output("result.csv");
 	for (int i = 0; i < size; i++)
-		Output << array[i].name << "," << array[i].rating << "\n";
+	{
+		for (int j = 0; j < array[i].name.size(); j++)
+		{
+			Output << array[i].name[j] << "," << array[i].rating << "\n";
+		}
+	}
 	Output.close();
 }
 
