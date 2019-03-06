@@ -53,6 +53,7 @@ int read(team * (&array))
 			p = buff.find(":");
 			cout << "zero" << endl;
 		}
+		
 		cout << "first" << endl;
 		array[top].rating += rating(buff);
 		for (int i = 1; i <= 8; i++)
