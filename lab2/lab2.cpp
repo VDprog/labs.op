@@ -29,12 +29,14 @@ int rating(string buff)
 	int p = buff.find(":"), a, b;
 	a = stoi(buff.substr(0, p));
 	b = stoi(buff.substr(p + 1, buff.size() - 1));
+	// cout << a << " " << b;
 	return points(a, b);
 }
 int read(team * (&array))
 {
 	ifstream Input("premier_league.csv");
-	int top = 0, a, b, p;
+	int top = 0;
+	int p, s;
 	string buff;
 
 	Input >> top;
@@ -44,35 +46,30 @@ int read(team * (&array))
 
 	while (Input.good())
 	{
-<<<<<<< HEAD
-		getline(Input, buff, ',');
-		p = buff.find(":");
-		while (p == -1)
-=======
-		Input.ignore(3);
-		getline(Input, buff, '"');
-		Input.ignore(2);
-		array[top].name = buff;
-		for (int i = 1; i <= 9; i++)
->>>>>>> 0250536be976fdf6253671462b5f0d266b039f7e
+		Input.ignore(1);					// ignore one symbol
+		getline(Input, buff, '\n');			// read one line
+
+		p = buff.find('"');
+		do
 		{
-			array[top].name.push_back(buff);
-			getline(Input, buff, ',');
-			p = buff.find(":");
-			cout << "zero" << endl;
+			array[top].name.push_back(buff.substr(s, p - s));
+			s = p + 3;
+			p = buff.find('"', s);
 		}
-		
-		cout << "first" << endl;
-		array[top].rating += rating(buff);
-		for (int i = 1; i <= 8; i++)
+		while (p != -1);
+
+		s--;
+		p = buff.find(',', s);
+		do
 		{
-			cout << "first" << endl;
-			getline(Input, buff, ',');
-			array[top].rating += rating(buff);
+			array[top].rating += rating(buff.substr(s, p - s));
+			s = p + 1;
+			p = buff.find(',', s);
 		}
-		getline(Input, buff, '\n');
-		array[top].rating += rating(buff);
+		while (p != -1);
 		top++;
+		s = 0;
+		p = 0;
 	}
 	Input.close();
 	return top;
@@ -123,6 +120,6 @@ int main()
 	sort(array, size);
 	print(array, size);
 	write(array, size);
-	system("pause");
+
 	return 0;
 }
