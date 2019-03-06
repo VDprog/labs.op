@@ -44,9 +44,17 @@ int read(team * (&array))
 
 	while (Input.good())
 	{
+<<<<<<< HEAD
 		getline(Input, buff, ',');
 		p = buff.find(":");
 		while (p == -1)
+=======
+		Input.ignore(3);
+		getline(Input, buff, '"');
+		Input.ignore(2);
+		array[top].name = buff;
+		for (int i = 1; i <= 9; i++)
+>>>>>>> 0250536be976fdf6253671462b5f0d266b039f7e
 		{
 			array[top].name.push_back(buff);
 			getline(Input, buff, ',');
@@ -115,6 +123,6 @@ int main()
 	sort(array, size);
 	print(array, size);
 	write(array, size);
-
+	system("pause");
 	return 0;
 }
